@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "818949870370",
+    "firebase_url": "https://health-fact.firebaseio.com",
+    "project_id": "health-fact",
+    "storage_bucket": "health-fact.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818949870370:android:41fe4a4dff1a0960",
+        "android_client_info": {
+          "package_name": "app.healthfact.craftystudio.healthfact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818949870370-4gum2ogvc7s5c45cvc79nrpspf2j6g59.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.healthfact.craftystudio.healthfact",
+            "certificate_hash": "fe7f2c046d0ee72ba663224bdde17430bfd725e1"
+          }
+        },
+        {
+          "client_id": "818949870370-t91ua43fj5c06c2h1bos67hkba4t0pe9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuxlQ-ftP2D3ykiy6qBlsAVuGzEerVEZU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818949870370-t91ua43fj5c06c2h1bos67hkba4t0pe9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

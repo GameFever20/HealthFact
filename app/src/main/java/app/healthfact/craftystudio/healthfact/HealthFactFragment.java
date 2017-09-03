@@ -14,15 +14,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.dynamiclinks.DynamicLink;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.ShortDynamicLink;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+
+import utils.FireBaseHandler;
 import utils.HealthFact;
 
 /**
@@ -36,18 +45,14 @@ public class HealthFactFragment extends Fragment {
 
     HealthFact healthFact;
 
-    static MainActivity mainActivity;
-    static SharedPreferences prefs;
-
+    static Context mContext;
 
     public static HealthFactFragment newInstance(HealthFact healthFact, MainActivity context) {
-        mainActivity = context;
+        mContext = context;
         HealthFactFragment fragment = new HealthFactFragment();
         Bundle args = new Bundle();
         args.putSerializable("HealthFact", healthFact);
         fragment.setArguments(args);
-        prefs = mainActivity.getSharedPreferences(
-                "app.healthfact.craftystudio.healthfact", Context.MODE_PRIVATE);
 
         return fragment;
     }
@@ -81,11 +86,46 @@ public class HealthFactFragment extends Fragment {
         TextView healthFull = (TextView) view.findViewById(R.id.fragment_full_description_textview);
         healthFull.setText(healthFact.getmHealthFactFull());
 
+        //show image
+
+
+        try {
+            ImageView factimageView1 = (ImageView) view.findViewById(R.id.fragment_fact_image_imageview);
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("healthfactImage/" + healthFact.getmHealthFactID() + "/" + "main");
+
+            Glide.with(getContext())
+                    .using(new FirebaseImageLoader())
+                    .load(storageReference)
+                    .crossFade(100)
+                    .fitCenter()
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .into(factimageView1);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
         Button shareButton = (Button) view.findViewById(R.id.fragment_share_button);
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onShareClick();
+            }
+        });
+
+        final Button likeButton = (Button) view.findViewById(R.id.fragment_Like_button);
+
+        likeButton.setText(healthFact.getmHealthFactLikes() + "");
+
+        likeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                healthFact.setmHealthFactLikes(healthFact.getmHealthFactLikes() + 1);
+                likeButton.setText(healthFact.getmHealthFactLikes() + "");
+                onLikeCLick(healthFact.getmHealthFactLikes());
+
+
             }
         });
 
@@ -106,6 +146,23 @@ public class HealthFactFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void onLikeCLick(int likes) {
+
+        FireBaseHandler fireBaseHandler = new FireBaseHandler();
+
+        fireBaseHandler.uploadHealthFactLikes(healthFact.getmHealthFactID(), likes, new FireBaseHandler.OnLikelistener() {
+            @Override
+            public void onLikeUpload(boolean isSuccessful) {
+                if (isSuccessful) {
+
+                } else {
+                    // storyLikesText.setText(story.getStoryLikes()+"");
+
+                }
+            }
+        });
     }
 
     private void onShareClick() {

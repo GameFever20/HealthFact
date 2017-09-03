@@ -18,6 +18,16 @@ public class HealthFact implements Serializable{
     private int mHealthFactLikes;
     boolean pushNotification;
 
+    public String getmHealthImageAddress() {
+        return mHealthImageAddress;
+    }
+
+    public void setmHealthImageAddress(String mHealthImageAddress) {
+        this.mHealthImageAddress = mHealthImageAddress;
+    }
+
+    private String mHealthImageAddress;
+
     public String getmHealthFactTitle() {
         return mHealthFactTitle;
     }

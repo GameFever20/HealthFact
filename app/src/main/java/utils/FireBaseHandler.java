@@ -15,6 +15,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Aisha on 8/31/2017.
@@ -35,7 +37,7 @@ public class FireBaseHandler {
     public void downloadHealthFact(String healthFactUID, final OnHealthFactlistener onHealthFactlistener) {
 
 
-        DatabaseReference myRef = mFirebaseDatabase.getReference().child("HealthFact/" + healthFactUID);
+        DatabaseReference myRef = mFirebaseDatabase.getReference().child("healthfact/" + healthFactUID);
 
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -62,7 +64,7 @@ public class FireBaseHandler {
     public void downloadHealthFactList(int limit, String lastHealthFactID, final OnHealthFactlistener onHealthFactlistener) {
 
 
-        mDatabaseRef = mFirebaseDatabase.getReference().child("HealthFact/");
+        mDatabaseRef = mFirebaseDatabase.getReference().child("healthfact/");
 
         Query myref2 = mDatabaseRef.orderByKey().limitToLast(limit).endAt(lastHealthFactID);
 
@@ -99,7 +101,7 @@ public class FireBaseHandler {
     public void downloadHealthFactList(int limit, final OnHealthFactlistener onHealthFactlistener) {
 
 
-        mDatabaseRef = mFirebaseDatabase.getReference().child("HealthFact/");
+        mDatabaseRef = mFirebaseDatabase.getReference().child("healthfact/");
 
         Query myref2 = mDatabaseRef.limitToLast(limit);
 
@@ -140,11 +142,11 @@ public class FireBaseHandler {
     public void uploadHealthFact(final HealthFact healthFact, final OnHealthFactlistener onHealthFactlistener) {
 
 
-        mDatabaseRef = mFirebaseDatabase.getReference().child("HealthFact/");
+        mDatabaseRef = mFirebaseDatabase.getReference().child("healthfact/");
 
         healthFact.setmHealthFactID(mDatabaseRef.push().getKey());
 
-        DatabaseReference mDatabaseRef1 = mFirebaseDatabase.getReference().child("HealthFact/" + healthFact.getmHealthFactID());
+        DatabaseReference mDatabaseRef1 = mFirebaseDatabase.getReference().child("healthfact/" + healthFact.getmHealthFactID());
 
 
         mDatabaseRef1.setValue(healthFact).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -166,6 +168,33 @@ public class FireBaseHandler {
 
     }
 
+    public void uploadHealthFactLikes(String healthFactUID, int likes, final OnLikelistener onLikelistener) {
+
+        DatabaseReference myRef = mFirebaseDatabase.getReference();
+
+        Map post = new HashMap();
+
+        post.put("healthfact/" + healthFactUID + "/pushNotification", false);
+
+        post.put("healthfact/" + healthFactUID + "/mHealthFactLikes", likes);
+
+
+        myRef.updateChildren(post).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                onLikelistener.onLikeUpload(true);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                onLikelistener.onLikeUpload(false);
+            }
+        });
+
+
+    }
+
     public interface OnHealthFactlistener {
 
 
@@ -175,5 +204,11 @@ public class FireBaseHandler {
 
 
         public void onHealthFactUpload(boolean isSuccessful);
+    }
+
+    public interface OnLikelistener {
+
+
+        public void onLikeUpload(boolean isSuccessful);
     }
 }

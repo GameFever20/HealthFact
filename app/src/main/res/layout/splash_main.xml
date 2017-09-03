@@ -2,30 +2,20 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorAccent">
+    android:background="@color/colorgreenish">
 
 
     <ImageView
         android:id="@+id/splash_icon_imageview"
-        android:layout_width="wrap_content"
-        android:layout_height="110dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_menu_slideshow"
+        android:scaleType="centerCrop"
+        android:src="@drawable/newsplash"
 
         />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/splash_icon_imageview"
-        android:layout_centerInParent="true"
-        android:fontFamily="serif"
-        android:text="Story Box"
-        android:textAlignment="center"
-         android:textSize="16sp"
-        android:textStyle="bold"
-        android:typeface="serif" />
 
 
 </RelativeLayout>
+

@@ -248,17 +248,23 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_rate) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
+            rateUs();
+        } else if (id == R.id.nav_suggestion) {
+            giveSuggestion();
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+
+            //sharingIntent.putExtra(Intent.EXTRA_STREAM, newsMetaInfo.getNewsImageLocalPath());
+
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
+                    "\n\n Read Health Fact Daily \n Download it now \n ");
+            startActivity(Intent.createChooser(sharingIntent, "Share Story App via"));
+
 
         }
 
@@ -271,7 +277,7 @@ public class MainActivity extends AppCompatActivity
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"acraftystudio@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suggestion From Short Story User");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suggestion From Health Fact Valuable User");
         emailIntent.setType("text/plain");
 
         startActivity(Intent.createChooser(emailIntent, "Send mail From..."));
@@ -337,7 +343,7 @@ public class MainActivity extends AppCompatActivity
                     mPagerAdapter.notifyDataSetChanged();
 
                 } else {
-                     openConnectionFailureDialog();
+                    openConnectionFailureDialog();
                 }
 
 

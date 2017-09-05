@@ -1,6 +1,8 @@
 package app.healthfact.craftystudio.healthfact;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -10,11 +12,13 @@ import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -31,6 +35,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 
+import org.w3c.dom.Text;
+
 import utils.FireBaseHandler;
 import utils.HealthFact;
 
@@ -46,6 +52,7 @@ public class HealthFactFragment extends Fragment {
     HealthFact healthFact;
 
     static Context mContext;
+
 
     public static HealthFactFragment newInstance(HealthFact healthFact, MainActivity context) {
         mContext = context;
@@ -102,7 +109,7 @@ public class HealthFactFragment extends Fragment {
                     .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .into(factimageView1);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -110,19 +117,21 @@ public class HealthFactFragment extends Fragment {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                showDialog();
                 onShareClick();
             }
         });
 
-        final Button likeButton = (Button) view.findViewById(R.id.fragment_Like_button);
+        final LinearLayout likeButton = (LinearLayout) view.findViewById(R.id.fragment_Like_Linearlayout);
 
-        likeButton.setText(healthFact.getmHealthFactLikes() + "");
+        final TextView likeTextview = (TextView) view.findViewById(R.id.fragment_like_textview);
+        likeTextview.setText(healthFact.getmHealthFactLikes() + " Likes");
 
         likeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 healthFact.setmHealthFactLikes(healthFact.getmHealthFactLikes() + 1);
-                likeButton.setText(healthFact.getmHealthFactLikes() + "");
+                likeTextview.setText(healthFact.getmHealthFactLikes() + " Likes");
                 onLikeCLick(healthFact.getmHealthFactLikes());
 
 
@@ -198,6 +207,7 @@ public class HealthFactFragment extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        hideDialog();
 
                     }
                 });
@@ -211,12 +221,21 @@ public class HealthFactFragment extends Fragment {
 
         //sharingIntent.putExtra(Intent.EXTRA_STREAM, newsMetaInfo.getNewsImageLocalPath());
 
+        hideDialog();
+
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shortUrl
                 + "\n\nRead Health Fact");
         startActivity(Intent.createChooser(sharingIntent, "Share Health Fact via"));
 
     }
 
+    private void showDialog() {
+
+    }
+
+    private void hideDialog() {
+
+    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

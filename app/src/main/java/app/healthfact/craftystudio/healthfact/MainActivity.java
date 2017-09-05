@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -39,6 +40,7 @@ import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
 import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.ArrayList;
 
 import utils.AppRater;
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.splash_main);
 
         //progressbar

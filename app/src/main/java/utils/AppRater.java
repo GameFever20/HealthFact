@@ -66,19 +66,20 @@ public class AppRater {
                             // FIRE ZE MISSILES!
                         }
                     })
-                    .setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Later", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+
+                        }
+                    })
+                    .setNeutralButton("No Thanks", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
                             // User cancelled the dialog
                             if (editor != null) {
                                 editor.putBoolean("dontshowagain", true);
                                 editor.commit();
                             }
-                            dialog.dismiss();
-                        }
-                    })
-                    .setNeutralButton("Not now", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
                             dialogInterface.dismiss();
 
                         }

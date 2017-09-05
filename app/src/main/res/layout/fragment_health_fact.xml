@@ -15,73 +15,99 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_margin="8dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp"
+                android:layout_margin="6dp"
                 android:orientation="vertical">
 
                 <ImageView
+                    android:id="@+id/fragment_fact_image_imageview"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:id="@+id/fragment_fact_image_imageview"
-                    android:scaleType="centerCrop"
-                     />
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/fragment_title_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Title"
-                    android:textStyle="bold"
-                    android:textAlignment="center"
+                    android:layout_margin="4dp"
                     android:fontFamily="serif"
+                    android:text="Title"
+                    android:textAlignment="center"
                     android:textColor="@color/colorwhite"
-                    android:textSize="24dp" />
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
 
 
                 <TextView
                     android:id="@+id/fragment_full_description_textview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:textAlignment="textStart"
+                    android:layout_margin="4dp"
                     android:lineSpacingExtra="2dp"
-                    android:textIsSelectable="true"
                     android:text="bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg       bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vgbdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg"
+                    android:textAlignment="textStart"
                     android:textColor="@color/colorlightwhite"
+                    android:textIsSelectable="true"
                     android:textSize="18dp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="horizontal">
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
 
                     <Button
                         android:id="@+id/fragment_share_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:layout_marginLeft="4dp"
                         android:layout_marginRight="12dp"
                         android:layout_weight="1"
                         android:background="@drawable/mybutton"
-                        android:text="share story"
+                        android:text="share   Fact"
                         android:textColor="@color/colorwhite" />
 
-                    <Button
-                        android:id="@+id/fragment_Like_button"
+                    <LinearLayout
+                        android:id="@+id/fragment_Like_Linearlayout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:layout_marginLeft="12dp"
                         android:layout_marginRight="4dp"
                         android:layout_weight="1"
                         android:background="@drawable/mybutton"
-                        android:text="Like story"
-                        android:textColor="@color/colorwhite" />
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginTop="8dp"
+                            android:layout_weight="2"
+                            android:src="@drawable/ic_action_likes" />
+
+                        <TextView
+                            android:id="@+id/fragment_like_textview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:layout_marginLeft="12dp"
+                            android:layout_marginRight="4dp"
+                            android:layout_marginTop="14dp"
+                            android:layout_weight="1"
+                            android:text="LIKE FACT"
+                            android:textColor="@color/colorwhite"
+                            android:textSize="14dp" />
+
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -93,5 +119,17 @@
 
     </android.support.v7.widget.CardView>
 
+    <Button
+        android:id="@+id/fragment_Like_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/mybutton"
+        android:text="Like story"
+        android:textColor="@color/colorwhite"
+        android:visibility="gone" />
 
 </LinearLayout>

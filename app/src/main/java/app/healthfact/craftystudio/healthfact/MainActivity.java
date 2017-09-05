@@ -1,5 +1,6 @@
 package app.healthfact.craftystudio.healthfact;
 
+import android.animation.ObjectAnimator;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -25,8 +26,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 
-import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -60,7 +62,10 @@ public class MainActivity extends AppCompatActivity
     private Handler handler;
     private Runnable runnable;
 
+
     boolean isSplashScreen = true;
+
+    ProgressBar progBar;
 
 
     @Override
@@ -68,15 +73,21 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_main);
 
+        //progressbar
+        progBar = (ProgressBar) findViewById(R.id.progressBar3);
 
         //Fabric.with(this, new Crashlytics());
 
         fireBaseHandler = new FireBaseHandler();
+
         openDynamicLink();
 
     }
 
     public void initializeActivity() {
+
+        progBar.clearAnimation();
+        progBar.setVisibility(View.GONE);
 
         setContentView(R.layout.activity_main);
         isSplashScreen = false;
@@ -131,8 +142,8 @@ public class MainActivity extends AppCompatActivity
 
 
         //calling rate now dialog
-        // AppRater appRater = new AppRater();
-        //appRater.app_launched(MainActivity.this);
+        AppRater appRater = new AppRater();
+        appRater.app_launched(MainActivity.this);
 
 
         FirebaseMessaging.getInstance().subscribeToTopic("subscribed");
@@ -446,7 +457,7 @@ public class MainActivity extends AppCompatActivity
     public void initializeInterstitialAds() {
 
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3940256099942544/1033173712");
+        mInterstitialAd.setAdUnitId("ca-app-pub-8455191357100024/8869838145");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         interstitialAdTimer(45000);

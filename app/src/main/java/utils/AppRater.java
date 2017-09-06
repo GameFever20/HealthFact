@@ -7,6 +7,9 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
+
 public class AppRater {
     private final static String APP_TITLE = "Health Facts";// App Name
     private final static String APP_PNAME = "app.healthfact.craftystudio.healthfact";// Package Name
@@ -61,7 +64,9 @@ public class AppRater {
                                 editor.putBoolean("dontshowagain", true);
                                 editor.commit();
                             }
+
                             dialog.dismiss();
+
 
                             // FIRE ZE MISSILES!
                         }

@@ -24,6 +24,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.ContentViewEvent;
+import com.crashlytics.android.answers.CustomEvent;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -71,12 +74,12 @@ public class HealthFactFragment extends Fragment {
             this.healthFact = (HealthFact) getArguments().getSerializable("HealthFact");
         }
 
-        /*
+
         Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName(story.getStoryTitle())
-                .putContentId(story.getStoryID())
+                .putContentName(healthFact.getmHealthFactTitle())
+                .putContentId(healthFact.getmHealthFactID())
         );
-*/
+
 
     }
 
@@ -92,6 +95,10 @@ public class HealthFactFragment extends Fragment {
 
         TextView healthFull = (TextView) view.findViewById(R.id.fragment_full_description_textview);
         healthFull.setText(healthFact.getmHealthFactFull());
+
+        TextView healthTimeUpload = (TextView) view.findViewById(R.id.fragment_fact_time_textview);
+        healthTimeUpload.setText(healthFact.getmHealthFactDate());
+
 
         //show image
 
@@ -166,6 +173,10 @@ public class HealthFactFragment extends Fragment {
             public void onLikeUpload(boolean isSuccessful) {
                 if (isSuccessful) {
 
+                    Answers.getInstance().logCustom(new CustomEvent("Content Id " + healthFact.getmHealthFactID())
+                            .putCustomAttribute("Likes", healthFact.getmHealthFactTitle()));
+
+
                 } else {
                     // storyLikesText.setText(story.getStoryLikes()+"");
 
@@ -185,7 +196,7 @@ public class HealthFactFragment extends Fragment {
                         new DynamicLink.SocialMetaTagParameters.Builder()
                                 .setTitle(healthFact.getmHealthFactTitle())
                                 .setDescription(healthFact.getmHealthFactTag())
-                                .setImageUrl(Uri.parse("https://firebasestorage.googleapis.com/v0/b/short-story-c4712.appspot.com/o/ssicon.png?alt=media&token=578b3bd8-6ce7-453b-8855-a44c0e16bd78"))
+                                .setImageUrl(Uri.parse(healthFact.getmHealthImageAddress()))
                                 .build())
                 .setGoogleAnalyticsParameters(
                         new DynamicLink.GoogleAnalyticsParameters.Builder()
@@ -216,6 +227,10 @@ public class HealthFactFragment extends Fragment {
 
 
     private void openShareDialog(Uri shortUrl) {
+
+        Answers.getInstance().logCustom(new CustomEvent("Content Id " + healthFact.getmHealthFactID())
+                .putCustomAttribute("Shares", healthFact.getmHealthFactTitle()));
+
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
 

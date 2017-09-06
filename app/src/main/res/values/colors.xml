@@ -9,7 +9,13 @@
     <color name="colorGrayBlue">#545a70</color>
 
     <color name="colorwhite">#ffffff</color>
-    <color name="colorlightwhite">#eaeaea</color>
+    <color name="colorlightwhite">#dfdfdf</color>
+
+
+    <color name="colorBlack">#161616</color>
+    <color name="colorlightblack">#1e1e1e</color>
+    <color name="colorblackish">#636262</color>
+
 
     <color name="colorgreenish">#2fa3a0</color>
 

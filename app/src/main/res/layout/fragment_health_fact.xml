@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="12dp"
-        app:cardBackgroundColor="@color/colorGrayBlue"
+        app:cardBackgroundColor="@color/colorwhite"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp">
 
@@ -38,7 +38,7 @@
                     android:fontFamily="serif"
                     android:text="Title"
                     android:textAlignment="center"
-                    android:textColor="@color/colorwhite"
+                    android:textColor="@color/colorBlack"
                     android:textSize="24dp"
                     android:textStyle="bold" />
 
@@ -51,8 +51,7 @@
                     android:lineSpacingExtra="2dp"
                     android:text="bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg       bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vgbdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg"
                     android:textAlignment="textStart"
-                    android:textColor="@color/colorlightwhite"
-                    android:textIsSelectable="true"
+                    android:textColor="@color/colorlightblack"
                     android:textSize="18dp" />
 
                 <LinearLayout
@@ -72,7 +71,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/mybutton"
                         android:text="share   Fact"
-                        android:textColor="@color/colorwhite" />
+                        android:textColor="@color/colorBlack" />
 
                     <LinearLayout
                         android:id="@+id/fragment_Like_Linearlayout"
@@ -91,7 +90,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_marginTop="8dp"
                             android:layout_weight="2"
-                            android:src="@drawable/ic_action_likes" />
+                            android:src="@drawable/ic_action_like" />
 
                         <TextView
                             android:id="@+id/fragment_like_textview"
@@ -103,13 +102,27 @@
                             android:layout_marginTop="14dp"
                             android:layout_weight="1"
                             android:text="LIKE FACT"
-                            android:textColor="@color/colorwhite"
+                            android:textColor="@color/colorBlack"
                             android:textSize="14dp" />
 
 
                     </LinearLayout>
 
                 </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/fragment_fact_time_textview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginTop="2dp"
+                    android:text="Time of fact upload"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/colorblackish"
+                    android:textSize="14dp" />
 
 
             </LinearLayout>

@@ -78,9 +78,6 @@ public class MainActivity extends AppCompatActivity
 
         //progressbar
         progBar = (ProgressBar) findViewById(R.id.progressBar3);
-
-        //Fabric.with(this, new Crashlytics());
-
         fireBaseHandler = new FireBaseHandler();
 
         openDynamicLink();
@@ -563,6 +560,7 @@ public class MainActivity extends AppCompatActivity
             return mHelthFactList.size();
         }
     }
+
 
 
 }

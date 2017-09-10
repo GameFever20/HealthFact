@@ -200,10 +200,10 @@ public class HealthFactFragment extends Fragment {
 
     private void onShareClick() {
         Task<ShortDynamicLink> shortLinkTask = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(Uri.parse("https://goo.gl/2uTbHK?healthFactID=" + healthFact.getmHealthFactID()))
+                .setLink(Uri.parse("https://goo.gl/Z1if7V?healthFactID=" + healthFact.getmHealthFactID()))
                 .setDynamicLinkDomain("ufn8w.app.goo.gl")
                 .setAndroidParameters(
-                        new DynamicLink.AndroidParameters.Builder("app.healthfact.craftystudio.healthfact")
+                        new DynamicLink.AndroidParameters.Builder("app.nutrition.craftystudio.fit.active")
                                 .build())
                 .setSocialMetaTagParameters(
                         new DynamicLink.SocialMetaTagParameters.Builder()
@@ -252,8 +252,8 @@ public class HealthFactFragment extends Fragment {
         hideDialog();
 
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shortUrl
-                + "\n\nRead Health Fact");
-        startActivity(Intent.createChooser(sharingIntent, "Share Health Fact via"));
+                + "\n\nRead Health Tips from Fit and Active");
+        startActivity(Intent.createChooser(sharingIntent, "Share Health Tip via"));
 
     }
 

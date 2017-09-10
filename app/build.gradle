@@ -19,7 +19,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.0"
     defaultConfig {
-        applicationId "app.healthfact.craftystudio.healthfact"
+        applicationId "app.nutrition.craftystudio.fit.active"
         minSdkVersion 17
         targetSdkVersion 25
         versionCode 1

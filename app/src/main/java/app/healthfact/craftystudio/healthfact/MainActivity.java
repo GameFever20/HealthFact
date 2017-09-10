@@ -13,6 +13,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -30,6 +31,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity
         FirebaseMessaging.getInstance().subscribeToTopic("subscribed");
 
 
-        MobileAds.initialize(this, "ca-app-pub-8455191357100024~7684748984");
+        MobileAds.initialize(this, "cca-app-pub-8455191357100024~5605269189");
         initializeInterstitialAds();
 
     }
@@ -172,6 +175,10 @@ public class MainActivity extends AppCompatActivity
                             //download story
                             downloadHealthFact(healthFactID);
 
+                            Answers.getInstance().logCustom(new CustomEvent("Via Dynamic link")
+                                    .putCustomAttribute("Fact id", healthFactID));
+
+
                             // downloadNewsArticle(newsArticleID);
 
                         } else {
@@ -185,10 +192,14 @@ public class MainActivity extends AppCompatActivity
                                 String healthFactID = intent.getStringExtra("healthFactID");
                                 if (healthFactID == null) {
                                     downloadHealthFactList();
+
+
                                 } else {
                                     //download story
                                     downloadHealthFact(healthFactID);
 
+                                    Answers.getInstance().logCustom(new CustomEvent("Via Push notification")
+                                            .putCustomAttribute("Fact id", healthFactID));
                                     //   Toast.makeText(this, "Story id is = "+storyID, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (Exception e) {
@@ -261,7 +272,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_rate) {
             // Handle the camera action
-            rateUs();
+            onRateUs();
         } else if (id == R.id.nav_suggestion) {
             giveSuggestion();
 
@@ -273,8 +284,9 @@ public class MainActivity extends AppCompatActivity
             //sharingIntent.putExtra(Intent.EXTRA_STREAM, newsMetaInfo.getNewsImageLocalPath());
 
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-                    "\n\n Read Health Fact Daily \n Download it now \n ");
-            startActivity(Intent.createChooser(sharingIntent, "Share Story App via"));
+                    "https://play.google.com/store/apps/details?id=app.nutrition.craftystudio.fit.active"+
+                            "\n\n Read Health Fact Daily \n Download it now \n ");
+            startActivity(Intent.createChooser(sharingIntent, "Share Fit and Active via"));
 
 
         }
@@ -288,18 +300,22 @@ public class MainActivity extends AppCompatActivity
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"acraftystudio@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suggestion From Health Fact Valuable User");
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suggestion For "+ getResources().getString(R.string.app_name));
         emailIntent.setType("text/plain");
 
         startActivity(Intent.createChooser(emailIntent, "Send mail From..."));
 
     }
 
-    private void rateUs() {
+    private void onRateUs() {
+        try {
+            String link = "https://play.google.com/store/apps/details?id=" + "app.nutrition.craftystudio.fit.active";
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+        } catch (Exception e) {
 
-        MainActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=app.craftystudio.vocabulary.dailyeditorial&hl=en")));
-
+        }
     }
+
 
     public void downloadHealthFact(String healthFactUID) {
 
@@ -457,7 +473,7 @@ public class MainActivity extends AppCompatActivity
     public void initializeInterstitialAds() {
 
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-8455191357100024/8869838145");
+        mInterstitialAd.setAdUnitId("ca-app-pub-8455191357100024/8750307275");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         interstitialAdTimer(45000);
@@ -476,7 +492,7 @@ public class MainActivity extends AppCompatActivity
                 // Code to be executed when an ad request fails.
                 Log.i("Ads", "onAdFailedToLoad");
 
-                // Answers.getInstance().logCustom(new CustomEvent("Ad failed to load").putCustomAttribute("Failed index",errorCode));
+                 Answers.getInstance().logCustom(new CustomEvent("Ad failed to load").putCustomAttribute("Failed index",errorCode));
 
             }
 

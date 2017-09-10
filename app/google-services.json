@@ -49,6 +49,68 @@
           "status": 2
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818949870370:android:045be54b58529590",
+        "android_client_info": {
+          "package_name": "app.admin.healthfact.craftystudio.healthfactadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818949870370-t91ua43fj5c06c2h1bos67hkba4t0pe9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuxlQ-ftP2D3ykiy6qBlsAVuGzEerVEZU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818949870370:android:737de142ad746abe",
+        "android_client_info": {
+          "package_name": "app.nutrition.craftystudio.fit.active"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818949870370-t91ua43fj5c06c2h1bos67hkba4t0pe9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuxlQ-ftP2D3ykiy6qBlsAVuGzEerVEZU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -8,7 +8,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="12dp"
+        android:layout_margin="8dp"
         app:cardBackgroundColor="@color/colorwhite"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp">
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp"
                     android:lineSpacingExtra="2dp"
-                    android:text="bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg       bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vgbdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg"
+                    android:text="bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg     bdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vgbdgjks ssjkhkbd kjshjsb ksgds bjkd  gk xcg vsdjv vg"
                     android:textAlignment="textStart"
                     android:textColor="@color/colorlightblack"
                     android:textSize="18dp" />

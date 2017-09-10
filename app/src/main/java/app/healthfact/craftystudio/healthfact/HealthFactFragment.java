@@ -13,6 +13,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.bumptech.glide.Glide;
@@ -90,11 +92,21 @@ public class HealthFactFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_health_fact, container, false);
 
         TextView healthTitle = (TextView) view.findViewById(R.id.fragment_title_textview);
-        healthTitle.setText(healthFact.getmHealthFactTitle());
-
+        //formatting text
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            healthTitle.setText(Html.fromHtml(healthFact.getmHealthFactTitle(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            healthTitle.setText(Html.fromHtml(healthFact.getmHealthFactTitle()));
+        }
 
         TextView healthFull = (TextView) view.findViewById(R.id.fragment_full_description_textview);
-        healthFull.setText(healthFact.getmHealthFactFull());
+        //formatting text
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            healthFull.setText(Html.fromHtml(healthFact.getmHealthFactFull(), Html.FROM_HTML_MODE_COMPACT));
+        } else {
+            healthFull.setText(Html.fromHtml(healthFact.getmHealthFactFull()));
+        }
+
 
         TextView healthTimeUpload = (TextView) view.findViewById(R.id.fragment_fact_time_textview);
         healthTimeUpload.setText(healthFact.getmHealthFactDate());
@@ -177,6 +189,7 @@ public class HealthFactFragment extends Fragment {
                             .putCustomAttribute("Likes", healthFact.getmHealthFactTitle()));
 
 
+                    Toast.makeText(mContext, "Thank You! for liking the Health Tips", Toast.LENGTH_SHORT).show();
                 } else {
                     // storyLikesText.setText(story.getStoryLikes()+"");
 

@@ -2,27 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorgreenish">
+    android:background="@color/colorwhite">
 
 
     <ImageView
         android:id="@+id/splash_icon_imageview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_centerInParent="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/splashscreen_nn"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="visible" />
 
-        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/splash_icon_imageview"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textColor="@color/colorBlack"
+        android:layout_marginTop="10dp"
+         android:text="Daily Health Fact" />
 
     <ProgressBar
         android:id="@+id/progressBar3"
         style="?android:attr/progressBarStyleLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="27dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="27dp" />
 
 
 </RelativeLayout>

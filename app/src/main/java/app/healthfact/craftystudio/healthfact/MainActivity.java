@@ -29,13 +29,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
+import com.facebook.ads.Ad;
+import com.facebook.ads.AdError;
+import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,6 +48,7 @@ import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import io.fabric.sdk.android.Fabric;
+
 import java.util.ArrayList;
 
 import utils.AppRater;
@@ -71,7 +76,7 @@ public class MainActivity extends AppCompatActivity
     boolean isSplashScreen = true;
 
     ProgressBar progBar;
-
+    private com.facebook.ads.InterstitialAd interstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,9 +157,9 @@ public class MainActivity extends AppCompatActivity
         FirebaseMessaging.getInstance().subscribeToTopic("subscribed");
 
 
-        MobileAds.initialize(this, "cca-app-pub-8455191357100024~5605269189");
-        initializeInterstitialAds();
-
+       // MobileAds.initialize(this, "ca-app-pub-8455191357100024~7684748984");
+       // initializeInterstitialAds();
+        initializeFacebookads();
     }
 
     private void openDynamicLink() {
@@ -227,7 +232,6 @@ public class MainActivity extends AppCompatActivity
                 });
     }
 
-
     @Override
     public void onBackPressed() {
         if (!isSplashScreen) {
@@ -276,6 +280,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_suggestion) {
             giveSuggestion();
 
+
+
         } else if (id == R.id.nav_share) {
 
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
@@ -284,7 +290,7 @@ public class MainActivity extends AppCompatActivity
             //sharingIntent.putExtra(Intent.EXTRA_STREAM, newsMetaInfo.getNewsImageLocalPath());
 
             sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,
-                    "https://play.google.com/store/apps/details?id=app.nutrition.craftystudio.fit.active"+
+                    "https://play.google.com/store/apps/details?id=app.nutrition.craftystudio.fit.active" +
                             "\n\n Read Health Fact Daily \n Download it now \n ");
             startActivity(Intent.createChooser(sharingIntent, "Share Fit and Active via"));
 
@@ -296,11 +302,53 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void initializeFacebookads() {
+        interstitialAd = new com.facebook.ads.InterstitialAd(this, "1466375360115237_1466377923448314");
+        interstitialAd.setAdListener(new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(Ad ad) {
+
+            }
+
+            @Override
+            public void onInterstitialDismissed(Ad ad) {
+
+                interstitialAd.loadAd();
+            }
+
+            @Override
+            public void onError(Ad ad, AdError adError) {
+             //   Toast.makeText(MainActivity.this, "Error msg " + adError.getErrorMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdLoaded(Ad ad) {
+
+            }
+
+            @Override
+            public void onAdClicked(Ad ad) {
+
+            }
+
+            @Override
+            public void onLoggingImpression(Ad ad) {
+
+            }
+        });
+
+        interstitialAd.loadAd();
+    }
+
+    private void showFacebookAds() {
+
+    }
+
     private void giveSuggestion() {
 
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"acraftystudio@gmail.com"});
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suggestion For "+ getResources().getString(R.string.app_name));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Suggestion For " + getResources().getString(R.string.app_name));
         emailIntent.setType("text/plain");
 
         startActivity(Intent.createChooser(emailIntent, "Send mail From..."));
@@ -473,7 +521,7 @@ public class MainActivity extends AppCompatActivity
     public void initializeInterstitialAds() {
 
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-8455191357100024/8750307275");
+        mInterstitialAd.setAdUnitId("ca-app-pub-8455191357100024/8869838145");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
         interstitialAdTimer(45000);
@@ -492,7 +540,7 @@ public class MainActivity extends AppCompatActivity
                 // Code to be executed when an ad request fails.
                 Log.i("Ads", "onAdFailedToLoad");
 
-                 Answers.getInstance().logCustom(new CustomEvent("Ad failed to load").putCustomAttribute("Failed index",errorCode));
+                Answers.getInstance().logCustom(new CustomEvent("Ad failed to load").putCustomAttribute("Failed index", errorCode));
 
             }
 
@@ -545,12 +593,19 @@ public class MainActivity extends AppCompatActivity
     private void checkInterstitialAds() {
 
         if (adsCount > 2 && pendingInterstitialAd) {
-            if (mInterstitialAd.isLoaded()) {
+         /*   if (mInterstitialAd.isLoaded()) {
                 mInterstitialAd.show();
             } else {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
-            }
+            }*/
+
+         if (interstitialAd.isAdLoaded()){
+             interstitialAd.show();
+         }else {
+             interstitialAd.loadAd();
+         }
+
         }
     }
 
@@ -576,7 +631,6 @@ public class MainActivity extends AppCompatActivity
             return mHelthFactList.size();
         }
     }
-
 
 
 }

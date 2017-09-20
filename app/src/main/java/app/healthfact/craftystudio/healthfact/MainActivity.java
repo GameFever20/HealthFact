@@ -17,6 +17,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -27,6 +28,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -38,9 +40,11 @@ import com.facebook.ads.Ad;
 import com.facebook.ads.AdError;
 import com.facebook.ads.InterstitialAdListener;
 import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
@@ -87,6 +91,8 @@ public class MainActivity extends AppCompatActivity
         //progressbar
         progBar = (ProgressBar) findViewById(R.id.progressBar3);
         fireBaseHandler = new FireBaseHandler();
+
+        MobileAds.initialize(this, "ca-app-pub-8455191357100024~7684748984");
 
         openDynamicLink();
 
@@ -157,9 +163,8 @@ public class MainActivity extends AppCompatActivity
         FirebaseMessaging.getInstance().subscribeToTopic("subscribed");
 
 
-       // MobileAds.initialize(this, "ca-app-pub-8455191357100024~7684748984");
        // initializeInterstitialAds();
-        initializeFacebookads();
+       // initializeFacebookads();
     }
 
     private void openDynamicLink() {
@@ -341,9 +346,7 @@ public class MainActivity extends AppCompatActivity
         interstitialAd.loadAd();
     }
 
-    private void showFacebookAds() {
 
-    }
 
     private void giveSuggestion() {
 
@@ -401,7 +404,13 @@ public class MainActivity extends AppCompatActivity
 
     public void downloadMoreHealthFactList() {
 
-        fireBaseHandler.downloadHealthFactList(5, mHelthFactList.get(mHelthFactList.size() - 1).getmHealthFactID(), new FireBaseHandler.OnHealthFactlistener() {
+        HealthFact healthFact =mHelthFactList.get(mHelthFactList.size()-1);
+        if (healthFact.getObjectType() == 1){
+            healthFact=mHelthFactList.get(mHelthFactList.size()-2);
+        }
+
+
+        fireBaseHandler.downloadHealthFactList(5, healthFact.getmHealthFactID(), new FireBaseHandler.OnHealthFactlistener() {
             @Override
             public void OnHealthFactlistener(HealthFact healthFact, boolean isSuccessful) {
 
@@ -416,6 +425,7 @@ public class MainActivity extends AppCompatActivity
                         MainActivity.this.mHelthFactList.add(healthFact);
                     }
 
+                    initializeNativeAds();
                     mPagerAdapter.notifyDataSetChanged();
 
                 } else {
@@ -453,6 +463,7 @@ public class MainActivity extends AppCompatActivity
                         MainActivity.this.mHelthFactList.add(healthFact);
                     }
 
+                    initializeNativeAds();
                     mPagerAdapter.notifyDataSetChanged();
 
                 } else {
@@ -489,6 +500,83 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    public void initializeNativeAds(){
+
+
+        for (HealthFact healthFact : mHelthFactList){
+
+            if (healthFact.getNativeExpressAdView() == null){
+
+                NativeExpressAdView adView = new NativeExpressAdView(this);
+
+                adView.setAdUnitId("ca-app-pub-8455191357100024/7311187776");
+                adView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+                adView.setAdSize(new AdSize(320, 150));
+                adView.loadAd(new AdRequest.Builder().build());
+                adView.setAdListener(new AdListener(){
+                    @Override
+                    public void onAdFailedToLoad(int i) {
+                        super.onAdFailedToLoad(i);
+                        Log.d("native ads", "onAdFailedToLoad: "+i);
+                    }
+
+                    @Override
+                    public void onAdLoaded() {
+                        super.onAdLoaded();
+                        Log.d("native ads", "onAdFailedToLoad: ");
+                    }
+                });
+                healthFact.setNativeExpressAdView(adView);
+
+            }
+
+        }
+
+        DisplayMetrics displayMetrics = MainActivity.this.getResources().getDisplayMetrics();
+        int dpHeight =(int)(displayMetrics.heightPixels / displayMetrics.density);
+        int dpWidth = (int)(displayMetrics.widthPixels / displayMetrics.density);
+
+        for (int i=0; i<mHelthFactList.size(); i++){
+
+
+            if (i % 3 ==2){
+
+                if (mHelthFactList.get(i).getObjectType()!=1) {
+
+
+                    HealthFact nativeAdshealth = new HealthFact();
+                    nativeAdshealth.setObjectType(1);
+                    NativeExpressAdView adView = new NativeExpressAdView(this);
+
+                    adView.setAdUnitId("ca-app-pub-8455191357100024/7223557860");
+                    adView.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+
+                    adView.setAdSize(new AdSize(dpWidth-24, 3*(dpHeight/4)));
+                    adView.loadAd(new AdRequest.Builder().build());
+                    adView.setAdListener(new AdListener() {
+                        @Override
+                        public void onAdFailedToLoad(int i) {
+                            super.onAdFailedToLoad(i);
+                            Log.d("native ads", "onAdFailedToLoad: " + i);
+                        }
+                    });
+                    nativeAdshealth.setNativeExpressAdView(adView);
+
+                    mHelthFactList.add(i, nativeAdshealth);
+                }
+
+            }
+
+        }
+
+
+
+
+    }
+
+
+
     private void initializeViewPager() {
 
         // Instantiate a ViewPager and a PagerAdapter.
@@ -508,7 +596,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onPageSelected(int position) {
 
-                checkInterstitialAds();
+                //checkInterstitialAds();
             }
 
             @Override

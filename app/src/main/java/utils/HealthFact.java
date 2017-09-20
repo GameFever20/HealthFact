@@ -1,5 +1,7 @@
 package utils;
 
+import com.google.android.gms.ads.NativeExpressAdView;
+
 import java.io.Serializable;
 
 /**
@@ -15,8 +17,10 @@ public class HealthFact implements Serializable{
     private String mHealthFactDate;
     private String mHealthFactID;
 
-    private int mHealthFactLikes;
+    private int mHealthFactLikes ,objectType;
     boolean pushNotification;
+
+    transient NativeExpressAdView nativeExpressAdView;
 
     public String getmHealthImageAddress() {
         return mHealthImageAddress;
@@ -82,5 +86,21 @@ public class HealthFact implements Serializable{
 
     public void setPushNotification(boolean pushNotification) {
         this.pushNotification = pushNotification;
+    }
+
+    public int getObjectType() {
+        return objectType;
+    }
+
+    public void setObjectType(int objectType) {
+        this.objectType = objectType;
+    }
+
+    public NativeExpressAdView getNativeExpressAdView() {
+        return nativeExpressAdView;
+    }
+
+    public void setNativeExpressAdView(NativeExpressAdView nativeExpressAdView) {
+        this.nativeExpressAdView = nativeExpressAdView;
     }
 }

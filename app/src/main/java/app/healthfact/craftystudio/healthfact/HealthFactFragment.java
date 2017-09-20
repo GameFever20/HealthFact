@@ -30,6 +30,7 @@ import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.ContentViewEvent;
 import com.crashlytics.android.answers.CustomEvent;
 import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -76,12 +77,14 @@ public class HealthFactFragment extends Fragment {
             this.healthFact = (HealthFact) getArguments().getSerializable("HealthFact");
         }
 
-
-        Answers.getInstance().logContentView(new ContentViewEvent()
-                .putContentName(healthFact.getmHealthFactTitle())
-                .putContentId(healthFact.getmHealthFactID())
-        );
-
+try {
+    Answers.getInstance().logContentView(new ContentViewEvent()
+            .putContentName(healthFact.getmHealthFactTitle())
+            .putContentId(healthFact.getmHealthFactID())
+    );
+}catch (Exception e){
+    e.printStackTrace();
+}
 
     }
 
@@ -89,6 +92,24 @@ public class HealthFactFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        if (healthFact.getObjectType() == 1) {
+            View view = inflater.inflate(R.layout.nativead_card_layout, container, false);
+
+            LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.nativead_container_linearLayout);
+            NativeExpressAdView nativeExpressAdView= healthFact.getNativeExpressAdView();
+
+            if (nativeExpressAdView.getParent() != null) {
+                ((ViewGroup) nativeExpressAdView.getParent()).removeView(nativeExpressAdView);
+            }
+
+            linearLayout.removeAllViews();
+            linearLayout.addView(nativeExpressAdView);
+
+            return view;
+        }
+
+
         View view = inflater.inflate(R.layout.fragment_health_fact, container, false);
 
         TextView healthTitle = (TextView) view.findViewById(R.id.fragment_title_textview);
@@ -156,6 +177,20 @@ public class HealthFactFragment extends Fragment {
 
             }
         });
+
+
+        NativeExpressAdView nativeExpressAdView =healthFact.getNativeExpressAdView();
+        if (nativeExpressAdView != null) {
+            LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.fragment_adcontainer_linearLayout);
+            linearLayout.removeAllViews();
+
+            if (nativeExpressAdView.getParent() != null) {
+                ((ViewGroup) nativeExpressAdView.getParent()).removeView(nativeExpressAdView);
+            }
+
+            linearLayout.addView(nativeExpressAdView);
+        }
+
 
         return view;
     }

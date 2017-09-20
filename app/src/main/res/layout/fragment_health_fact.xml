@@ -125,6 +125,16 @@
                     android:textSize="14dp" />
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:id="@+id/fragment_adcontainer_linearLayout"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="24dp"
+                    android:layout_height="wrap_content">
+
+
+                </LinearLayout>
+
             </LinearLayout>
 
         </ScrollView>

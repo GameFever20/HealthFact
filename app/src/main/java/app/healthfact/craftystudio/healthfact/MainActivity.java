@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity
                                     //   Toast.makeText(this, "Story id is = "+storyID, Toast.LENGTH_SHORT).show();
                                 }
                             } catch (Exception e) {
-                                downloadHealthFactList();
+
                                 e.printStackTrace();
                             }
 
@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity
                 .addOnFailureListener(this, new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        downloadHealthFactList();
                         Log.w("DeepLink", "getDynamicLink:onFailure", e);
                     }
                 });

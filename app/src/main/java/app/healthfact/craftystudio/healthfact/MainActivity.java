@@ -518,7 +518,13 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onAdFailedToLoad(int i) {
                         super.onAdFailedToLoad(i);
-                        Log.d("native ads", "onAdFailedToLoad: "+i);
+
+                        try {
+                            Answers.getInstance().logCustom(new CustomEvent("Ad failed to load").putCustomAttribute("placement","bottom").putCustomAttribute("error code",i));
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+
                     }
 
                     @Override
@@ -558,7 +564,11 @@ public class MainActivity extends AppCompatActivity
                         @Override
                         public void onAdFailedToLoad(int i) {
                             super.onAdFailedToLoad(i);
-                            Log.d("native ads", "onAdFailedToLoad: " + i);
+                            try {
+                                Answers.getInstance().logCustom(new CustomEvent("Ad failed to load").putCustomAttribute("placement","main").putCustomAttribute("error code",i));
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     });
                     nativeAdshealth.setNativeExpressAdView(adView);

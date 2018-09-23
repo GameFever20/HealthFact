@@ -15,6 +15,9 @@
             android:icon="@drawable/ic_action_share"
             android:title="Share" />
 
+        <item
+            android:id="@+id/nav_privacy_policy"
+            android:title="Privacy Policy" />
 
     </group>
 

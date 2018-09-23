@@ -301,11 +301,23 @@ public class MainActivity extends AppCompatActivity
             startActivity(Intent.createChooser(sharingIntent, "Share Fit and Active via"));
 
 
+        } else if (id == R.id.nav_privacy_policy){
+            onPrivacyPolicyClick();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void onPrivacyPolicyClick() {
+        try {
+            String link = "http://aspirantworld.in/privacy-policy";
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(link)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void initializeFacebookads() {
@@ -530,7 +542,7 @@ public class MainActivity extends AppCompatActivity
                     @Override
                     public void onAdLoaded() {
                         super.onAdLoaded();
-                        Log.d("native ads", "onAdFailedToLoad: ");
+
                     }
                 });
                 healthFact.setNativeExpressAdView(adView);

@@ -27,8 +27,8 @@
                 <ImageView
                     android:id="@+id/fragment_fact_image_imageview"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
-                    android:scaleType="centerCrop" />
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY" />
 
                 <TextView
                     android:id="@+id/fragment_title_textview"

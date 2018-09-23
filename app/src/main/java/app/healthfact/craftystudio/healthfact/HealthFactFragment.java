@@ -1,6 +1,7 @@
 package app.healthfact.craftystudio.healthfact;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -58,7 +59,7 @@ public class HealthFactFragment extends Fragment {
     HealthFact healthFact;
 
     static Context mContext;
-
+    ProgressDialog progressDialog;
 
     public static HealthFactFragment newInstance(HealthFact healthFact, MainActivity context) {
         mContext = context;
@@ -77,14 +78,14 @@ public class HealthFactFragment extends Fragment {
             this.healthFact = (HealthFact) getArguments().getSerializable("HealthFact");
         }
 
-try {
-    Answers.getInstance().logContentView(new ContentViewEvent()
-            .putContentName(healthFact.getmHealthFactTitle())
-            .putContentId(healthFact.getmHealthFactID())
-    );
-}catch (Exception e){
-    e.printStackTrace();
-}
+        try {
+            Answers.getInstance().logContentView(new ContentViewEvent()
+                    .putContentName(healthFact.getmHealthFactTitle())
+                    .putContentId(healthFact.getmHealthFactID())
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -96,8 +97,8 @@ try {
         if (healthFact.getObjectType() == 1) {
             View view = inflater.inflate(R.layout.nativead_card_layout, container, false);
 
-            LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.nativead_container_linearLayout);
-            NativeExpressAdView nativeExpressAdView= healthFact.getNativeExpressAdView();
+            LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.nativead_container_linearLayout);
+            NativeExpressAdView nativeExpressAdView = healthFact.getNativeExpressAdView();
 
             if (nativeExpressAdView.getParent() != null) {
                 ((ViewGroup) nativeExpressAdView.getParent()).removeView(nativeExpressAdView);
@@ -179,7 +180,7 @@ try {
         });
 
 
-        NativeExpressAdView nativeExpressAdView =healthFact.getNativeExpressAdView();
+        NativeExpressAdView nativeExpressAdView = healthFact.getNativeExpressAdView();
         if (nativeExpressAdView != null) {
             LinearLayout linearLayout = (LinearLayout) view.findViewById(R.id.fragment_adcontainer_linearLayout);
             linearLayout.removeAllViews();
@@ -220,9 +221,12 @@ try {
             public void onLikeUpload(boolean isSuccessful) {
                 if (isSuccessful) {
 
-                    Answers.getInstance().logCustom(new CustomEvent("Content Id " + healthFact.getmHealthFactID())
-                            .putCustomAttribute("Likes", healthFact.getmHealthFactTitle()));
-
+                    try {
+                        Answers.getInstance().logCustom(new CustomEvent("Content Id " + healthFact.getmHealthFactID())
+                                .putCustomAttribute("Likes", healthFact.getmHealthFactTitle()));
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
 
                     Toast.makeText(mContext, "Thank You! for liking the Health Tips", Toast.LENGTH_SHORT).show();
                 } else {
@@ -276,8 +280,12 @@ try {
 
     private void openShareDialog(Uri shortUrl) {
 
-        Answers.getInstance().logCustom(new CustomEvent("Content Id " + healthFact.getmHealthFactID())
-                .putCustomAttribute("Shares", healthFact.getmHealthFactTitle()));
+        try {
+            Answers.getInstance().logCustom(new CustomEvent("Share link created").putCustomAttribute("Content Id", healthFact.getmHealthFactID())
+                    .putCustomAttribute("Shares", healthFact.getmHealthFactTitle()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
@@ -292,12 +300,19 @@ try {
 
     }
 
-    private void showDialog() {
-
+    public void showDialog() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Please wait..Creating link");
+        progressDialog.setCancelable(true);
+        progressDialog.show();
     }
 
-    private void hideDialog() {
-
+    public void hideDialog() {
+        try {
+            progressDialog.cancel();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public interface OnFragmentInteractionListener {
